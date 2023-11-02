@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NotWordle</string>
+    <string name="title">Wort-Hol</string>
+    <string name="title_desc">The totally-not clone of another game</string>
+    <string name="submit">SUBMIT</string>
+    <string name="restart">RESTART</string>
+    <string name="clear">CLEAR</string>
+    <string name="emptyspace"> </string>
+</resources>
