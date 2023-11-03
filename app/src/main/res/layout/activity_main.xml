@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    tools:ignore="Autofill, LabelFor"
     >
 
     <LinearLayout
@@ -36,6 +37,7 @@
         />
 
     <GridLayout
+        android:id="@+id/box_grid_GL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -45,372 +47,23 @@
         android:layout_gravity="center"
         >
 
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/current_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/current_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/current_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/current_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/current_et"
-            />
+        <EditText style="@style/current_box" />
+        <EditText style="@style/current_box" />
+        <EditText style="@style/current_box" />
+        <EditText style="@style/current_box" />
+        <EditText style="@style/current_box" />
 
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
-        <EditText
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:maxLength="1"
-            android:inputType="textCapCharacters"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:autofillHints="name"
-            android:hint="@string/emptyspace"
-            android:background="@drawable/not_yet_et"
-            />
+        <EditText style="@style/unselected" />
+        <EditText style="@style/unselected" />
+        <EditText style="@style/unselected" />
+        <EditText style="@style/unselected" />
+        <EditText style="@style/unselected" />
 
 
     </GridLayout>
 
     <Button
+        android:id="@+id/submit_BT"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -418,6 +71,7 @@
         android:text="@string/submit"
         />
     <Button
+        android:id="@+id/restart_BT"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -425,6 +79,7 @@
         android:text="@string/restart"
         />
     <Button
+        android:id="@+id/clear_BT"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
