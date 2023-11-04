@@ -15,4 +15,4 @@ green, yellow or gray: green indicates that letter is correct and in the correct
 the answer but not in the right position, while gray indicates it is not in the answer at all. Multiple instances
 of the same letter in a guess, such as the "o"s in "robot", will be colored green or yellow only if the letter
 also appears multiple times in the answer; otherwise, excess repeating letters will be colored gray. Further instructions
-can be viewed via the [PDF file] (https://github.com/tony-tomass/NotWordle/blob/main/Assignment%204%20-%20Firebase.pdf).
+can be viewed via the [PDF file](https://github.com/tony-tomass/NotWordle/blob/main/Assignment%204%20-%20Firebase.pdf).
