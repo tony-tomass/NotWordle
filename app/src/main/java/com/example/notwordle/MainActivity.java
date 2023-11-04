@@ -161,8 +161,6 @@ public class MainActivity extends AppCompatActivity {
         String input_word = "";
         //Log.i("current_index_check", String.valueOf(current_row_index));
 
-
-
         for (int i = 0; i < ROW_SIZE; i++) {
             EditText et = (EditText) grid.getChildAt(getChildAtCalculator(i));
             //Log.i("int_i_check", String.valueOf(i));
