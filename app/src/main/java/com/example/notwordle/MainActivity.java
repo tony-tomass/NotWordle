@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
+//TODO: Have check for null values
+
 public class MainActivity extends AppCompatActivity {
 
     Button submit_bt;
@@ -34,8 +36,18 @@ public class MainActivity extends AppCompatActivity {
              */
 
             checkWord();
-            current_row_index++;
-            toNextRow();
+            if (!checkWinCondition()) {
+                if (current_row_index < 5) {
+                    current_row_index++;
+                    toNextRow();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "you losed womp womp", Toast.LENGTH_LONG).show();
+                }
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "your winner!!!", Toast.LENGTH_LONG).show();
+            }
         }
     };
     View.OnClickListener restart_listener = new View.OnClickListener() {
@@ -85,8 +97,6 @@ public class MainActivity extends AppCompatActivity {
                 {-2, -2, -2, -2, -2},
                 {-2, -2, -2, -2, -2}
         };
-
-
     }
 
     public void checkRows() {
@@ -101,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
             //Log.i("starting", "This is Row " + row + " Col. " + col);
             switch (box_state[row][col]) {
+                //https://stackoverflow.com/questions/12523005/how-set-background-drawable-programmatically-in-android
                 case -2:
                     //TODO: Technically not needed since it won't be changing to this state ever, only starting at it
                     et.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.not_yet_et));
@@ -137,14 +148,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toNextRow() {
-        Log.i("setting_next_row", "Setting up to next row...");
-
-        for (int i = 0; i < box_state[current_row_index].length; i++) {
-
+        //Log.i("setting_next_row", "Setting up to next row...");
+        for (int i = 0; i < ROW_SIZE; i++) {
             box_state[current_row_index][i] = 0;
-
-            Log.i("boxes_done", "Box #" + i + " done.");
-
+            //Log.i("boxes_done", "Box #" + i + " done.");
         }
         checkRows();
     }
@@ -152,38 +159,31 @@ public class MainActivity extends AppCompatActivity {
     public void checkWord() {
         StringBuilder stringBuilder = new StringBuilder();
         String input_word = "";
-        Log.i("current_index_check", String.valueOf(current_row_index));
+        //Log.i("current_index_check", String.valueOf(current_row_index));
 
-        //(Current row index * (Length of row - 1) + i
-        //(0 * 4) + 0 = 0 => B
-        //(0 * 4) + 1 = 1 => R
-        //...
-        //(1 + 4) + 0 = 5
 
-        for (int i = 0; i < box_state[current_row_index].length; i++) {
+
+        for (int i = 0; i < ROW_SIZE; i++) {
             EditText et = (EditText) grid.getChildAt(getChildAtCalculator(i));
-
-            Log.i("int_i_check", String.valueOf(i));
-            Log.i("current_letter", et.getText().toString());
-
+            //Log.i("int_i_check", String.valueOf(i));
+            //Log.i("current_letter", et.getText().toString());
             stringBuilder.append(et.getText().toString());
         }
         input_word = stringBuilder.toString().toLowerCase();
-        Log.i("input_word", input_word);
+        //Log.i("input_word", input_word);
 
-        for (int i = 0; i < box_state[current_row_index].length; i++) {
+        char[] input_chars = input_word.toCharArray();
+        char[] answer_chars = answer.toCharArray();
+
+        for (int i = 0; i < ROW_SIZE; i++) {
             EditText et = (EditText) grid.getChildAt(getChildAtCalculator(i));
             String box_letter = et.getText().toString().toLowerCase();
-
-            Log.i("box_letter", box_letter);
-            Log.i("check_if_contain", String.valueOf(answer.contains(box_letter)));
-
+            //Log.i("box_letter", box_letter);
+            //Log.i("check_if_contain", String.valueOf(answer.contains(box_letter)));
             if (answer.contains(box_letter)) {
-
-                Log.i("index_of_letter", "Index of Input Letter '" + box_letter + "': " + input_word.indexOf(box_letter));
-                Log.i("index_of_ans_letter", "Index of Answer Letter '" + box_letter + "': " + answer.indexOf(box_letter));
-
-                if (input_word.indexOf(box_letter) == answer.indexOf(box_letter)) {
+                //Log.i("index_of_letter", "Index of Input Letter '" + box_letter + "': " + input_word.indexOf(box_letter));
+                //Log.i("index_of_ans_letter", "Index of Answer Letter '" + box_letter + "': " + answer.indexOf(box_letter));
+                if (input_chars[i] == answer_chars[i]) {
                     //Correct
                     box_state[current_row_index][i] = 2;
                 }
@@ -196,11 +196,25 @@ public class MainActivity extends AppCompatActivity {
                 //Incorrect
                 box_state[current_row_index][i] = -1;
             }
+            checkRows();
         }
+    }
 
+    public boolean checkWinCondition() {
+        int points = 0;
+        for (int i = 0; i < box_state[current_row_index].length; i++) {
+            points += box_state[current_row_index][i];
+        }
+        Log.i("points", String.valueOf(points));
+        return points >= 10;
     }
 
     public int getChildAtCalculator(int i) {
+        //(Current row index * (Length of row - 1) + i
+        //(0 * 4) + 0 = 0 => B
+        //(0 * 4) + 1 = 1 => R
+        //...
+        //(1 + 4) + 0 = 5
         return (current_row_index * (box_state[current_row_index].length)) + i;
     }
 
