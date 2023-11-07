@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 public class AddWordActivity extends AppCompatActivity {
 
     Button switch_bt;
     Button add_bt;
     EditText enter_word_et;
+    FirebaseDatabase database;
 
     View.OnClickListener switch_listener = new View.OnClickListener() {
         @Override
@@ -38,6 +41,8 @@ public class AddWordActivity extends AppCompatActivity {
 
         switch_bt.setOnClickListener(switch_listener);
         add_bt.setOnClickListener(add_listener);
+
+        database = FirebaseDatabase.getInstance();
 
     }
 }
