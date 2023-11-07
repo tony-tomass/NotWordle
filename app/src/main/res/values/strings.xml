@@ -6,4 +6,8 @@
     <string name="restart">RESTART</string>
     <string name="clear">CLEAR</string>
     <string name="emptyspace"> </string>
+    <string name="add_a_word">ADD A WORD</string>
+    <string name="enter_word_hint">Enter word</string>
+    <string name="add_word">ADD WORD</string>
+    <string name="back_to_game">Back to Game</string>
 </resources>

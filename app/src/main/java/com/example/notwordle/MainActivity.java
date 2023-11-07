@@ -3,25 +3,34 @@ package com.example.notwordle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
-//TODO: Have check for null values
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+//TODO: Have check for null values, implement restart and clear buttons
+//Firebase Resources
+//https://stackoverflow.com/questions/68409757/how-to-add-firebase-database-rules-without-authentication
+//https://firebase.google.com/docs/rules/basics#realtime-database
+//https://firebase.google.com/docs/reference/security/database
 
 public class MainActivity extends AppCompatActivity {
 
     Button submit_bt;
     Button restart_bt;
     Button clear_bt;
+    Button switch_bt;
     GridLayout grid;
-    char[] word;
     String answer;
     int[][] box_state;
     static final int ROW_SIZE = 5;
     static final int WIN_CONDITION = 10;
     int current_row_index;
+    FirebaseDatabase database;
 
     View.OnClickListener submit_listener = new View.OnClickListener() {
         @Override
@@ -62,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
             //
         }
     };
+    View.OnClickListener switch_listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getApplicationContext(), AddWordActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +87,15 @@ public class MainActivity extends AppCompatActivity {
         submit_bt = findViewById(R.id.submit_BT);
         restart_bt = findViewById(R.id.restart_BT);
         clear_bt = findViewById(R.id.clear_BT);
+        switch_bt = findViewById(R.id.add_word_BT);
         grid = findViewById(R.id.box_grid_GL);
 
         submit_bt.setOnClickListener(submit_listener);
         restart_bt.setOnClickListener(restart_listener);
         clear_bt.setOnClickListener(clear_listener);
+        switch_bt.setOnClickListener(switch_listener);
+
+        database = FirebaseDatabase.getInstance();
 
         //TODO: Implement database to pull answers from
         answer = "brain";
@@ -97,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 {-2, -2, -2, -2, -2},
                 {-2, -2, -2, -2, -2}
         };
+
     }
 
     public void checkRows() {
@@ -204,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
             points += box_state[current_row_index][i];
         }
         Log.i("points", String.valueOf(points));
-        return points >= 10;
+        return points >= WIN_CONDITION;
     }
 
     public int getChildAtCalculator(int i) {
