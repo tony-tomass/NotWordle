@@ -169,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
         Starting off, the top row must all be 0 and all rows below -2
          */
         current_row_index = 0;
+        resetBoxState();
+        /*
         box_state = new int[][]{
                 {0, 0, 0, 0, 0},
                 {-2, -2, -2, -2, -2},
@@ -177,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 {-2, -2, -2, -2, -2},
                 {-2, -2, -2, -2, -2}
         };
+         */
 
     }
 
@@ -194,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
             switch (box_state[row][col]) {
                 //https://stackoverflow.com/questions/12523005/how-set-background-drawable-programmatically-in-android
                 case -2:
-                    //TODO: Technically not needed since it won't be changing to this state ever, only starting at it
                     et.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.not_yet_et));
                     et.setTextColor(getResources().getColor(R.color.white));
                     et.setEnabled(false);
