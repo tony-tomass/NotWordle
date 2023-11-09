@@ -76,13 +76,24 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener restart_listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //
+            //Restarts game with new word
+            answer = word_bank.get(rng.nextInt(word_bank.size()));
+            current_row_index = 0;
+            resetBoxState();
+            checkRows();
+            clearBox();
+            Toast.makeText(getApplicationContext(), "Game has been reset with a new word!", Toast.LENGTH_LONG).show();
         }
     };
     View.OnClickListener clear_listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //
+            //Lets user restart from beginning with the same word
+            current_row_index = 0;
+            resetBoxState();
+            checkRows();
+            clearBox();
+            Toast.makeText(getApplicationContext(), "Game has been cleared! You can try again with more guesses!", Toast.LENGTH_LONG).show();
         }
     };
     View.OnClickListener switch_listener = new View.OnClickListener() {
@@ -280,6 +291,22 @@ public class MainActivity extends AppCompatActivity {
         return (current_row_index * (box_state[current_row_index].length)) + i;
     }
 
+    public void resetBoxState() {
+        box_state = new int[][]{
+                {0, 0, 0, 0, 0},
+                {-2, -2, -2, -2, -2},
+                {-2, -2, -2, -2, -2},
+                {-2, -2, -2, -2, -2},
+                {-2, -2, -2, -2, -2},
+                {-2, -2, -2, -2, -2}
+        };
+    }
 
+    public void clearBox() {
+        for (int i = 0; i < grid.getChildCount(); i++){
+            EditText et = (EditText) grid.getChildAt(i);
+            et.setText("");
+        }
+    }
 
 }
