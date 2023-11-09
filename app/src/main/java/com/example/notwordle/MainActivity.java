@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.LinkedList;
 import java.util.Random;
 
-//TODO: Have check for null values, implement restart and clear buttons
+//TODO: See any ways to clean up code
 //Firebase Resources
 //https://stackoverflow.com/questions/68409757/how-to-add-firebase-database-rules-without-authentication
 //https://firebase.google.com/docs/rules/basics#realtime-database
@@ -59,18 +59,24 @@ public class MainActivity extends AppCompatActivity {
              */
 
             checkWord();
-            if (!checkWinCondition()) {
-                if (current_row_index < 5) {
-                    current_row_index++;
-                    toNextRow();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "you losed womp womp", Toast.LENGTH_LONG).show();
-                }
+            if (!checkEmptyInputs()) {
+                Toast.makeText(getApplicationContext(), "ERROR: Invalid Input - Fill in each box!", Toast.LENGTH_LONG).show();
             }
             else {
-                Toast.makeText(getApplicationContext(), "your winner!!!", Toast.LENGTH_LONG).show();
+                if (!checkWinCondition()) {
+                    if (current_row_index < 5) {
+                        current_row_index++;
+                        toNextRow();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "you losed womp womp", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "your winner!!!", Toast.LENGTH_LONG).show();
+                }
             }
+
         }
     };
     View.OnClickListener restart_listener = new View.OnClickListener() {
@@ -307,6 +313,18 @@ public class MainActivity extends AppCompatActivity {
             EditText et = (EditText) grid.getChildAt(i);
             et.setText("");
         }
+    }
+
+    public boolean checkEmptyInputs() {
+        StringBuilder stringBuilder = new StringBuilder();
+        String input_word = "";
+
+        for (int i = 0; i < ROW_SIZE; i++) {
+            EditText et = (EditText) grid.getChildAt(getChildAtCalculator(i));
+            stringBuilder.append(et.getText().toString());
+        }
+        input_word = stringBuilder.toString().toLowerCase();
+        return !input_word.isEmpty() && input_word.length() >= 5;
     }
 
 }
