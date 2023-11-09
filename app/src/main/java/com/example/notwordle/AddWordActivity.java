@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AddWordActivity extends AppCompatActivity {
@@ -15,6 +16,7 @@ public class AddWordActivity extends AppCompatActivity {
     Button add_bt;
     EditText enter_word_et;
     FirebaseDatabase database;
+    DatabaseReference myDB;
 
     View.OnClickListener switch_listener = new View.OnClickListener() {
         @Override
@@ -26,7 +28,15 @@ public class AddWordActivity extends AppCompatActivity {
     View.OnClickListener add_listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //
+            String s = enter_word_et.getText().toString().trim();
+            if (!checkWord(s)) {
+                Toast.makeText(getApplicationContext(), "Error: Empty field or invalid length", Toast.LENGTH_LONG).show();
+            }
+            else {
+                myDB.child("words").push().setValue(s);
+                Toast.makeText(getApplicationContext(), "Word has been added to word bank!", Toast.LENGTH_LONG).show();
+                enter_word_et.setText("");
+            }
         }
     };
 
@@ -43,6 +53,11 @@ public class AddWordActivity extends AppCompatActivity {
         add_bt.setOnClickListener(add_listener);
 
         database = FirebaseDatabase.getInstance();
+        myDB = database.getReference();
 
+    }
+
+    public boolean checkWord(String word) {
+        return word != null && word.length() == 5;
     }
 }

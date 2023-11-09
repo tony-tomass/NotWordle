@@ -1,5 +1,6 @@
 package com.example.notwordle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -9,8 +10,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 //TODO: Have check for null values, implement restart and clear buttons
 //Firebase Resources
@@ -31,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     static final int WIN_CONDITION = 10;
     int current_row_index;
     FirebaseDatabase database;
+    DatabaseReference myDB;
+    String[] word_bank;
 
     View.OnClickListener submit_listener = new View.OnClickListener() {
         @Override
@@ -96,6 +104,21 @@ public class MainActivity extends AppCompatActivity {
         switch_bt.setOnClickListener(switch_listener);
 
         database = FirebaseDatabase.getInstance();
+        myDB = database.getReference();
+
+        myDB.child("words").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                }
+            }
+        });
+
+        
 
         //TODO: Implement database to pull answers from
         answer = "brain";
@@ -236,5 +259,7 @@ public class MainActivity extends AppCompatActivity {
         //(1 + 4) + 0 = 5
         return (current_row_index * (box_state[current_row_index].length)) + i;
     }
+
+
 
 }
