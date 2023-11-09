@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
@@ -16,7 +17,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.LinkedList;
+import java.util.Random;
 
 //TODO: Have check for null values, implement restart and clear buttons
 //Firebase Resources
@@ -38,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     int current_row_index;
     FirebaseDatabase database;
     DatabaseReference myDB;
-    String[] word_bank;
+    LinkedList<String> word_bank = new LinkedList<>();
+    Random rng = new Random();
 
     View.OnClickListener submit_listener = new View.OnClickListener() {
         @Override
@@ -92,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        database = FirebaseDatabase.getInstance();
+        myDB = database.getReference("words");
+
         submit_bt = findViewById(R.id.submit_BT);
         restart_bt = findViewById(R.id.restart_BT);
         clear_bt = findViewById(R.id.clear_BT);
@@ -103,25 +112,36 @@ public class MainActivity extends AppCompatActivity {
         clear_bt.setOnClickListener(clear_listener);
         switch_bt.setOnClickListener(switch_listener);
 
-        database = FirebaseDatabase.getInstance();
-        myDB = database.getReference();
+        Log.i("word_bank_length_before", String.valueOf(word_bank.size()));
 
-        myDB.child("words").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        myDB.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
+                    Log.i("firebase", "Error getting data", task.getException());
                 }
                 else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    //Iterable<DataSnapshot> test = task.getResult().getChildren();
+                    //https://stackoverflow.com/questions/69684871/getting-the-value-of-a-child-of-a-unique-id-from-firebase
+                    //TODO: App performance might suffer if database gets huge
+                    for (DataSnapshot child : task.getResult().getChildren()) {
+                        String s = child.getValue(String.class);
+                        word_bank.add(s);
+                        //Log.i("word_bank_length_loop", String.valueOf(word_bank.size()));
+                        //Log.i("string", s);
+                    }
+                    //Log.i("firebase", String.valueOf(task.getResult().getValue()));
                 }
+
+                Log.i("word_bank_size", String.valueOf(word_bank.size()));
+                // Random number b/w 0 and Length - 1
+                answer = word_bank.get(rng.nextInt(word_bank.size()));
+                Log.i("answer", answer);
+
             }
         });
 
-        
-
-        //TODO: Implement database to pull answers from
-        answer = "brain";
+        //answer = "brain"
 
         /*
         -2 = next row (greyed out)

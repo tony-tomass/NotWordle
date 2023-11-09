@@ -28,7 +28,7 @@ public class AddWordActivity extends AppCompatActivity {
     View.OnClickListener add_listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String s = enter_word_et.getText().toString().trim();
+            String s = enter_word_et.getText().toString().toLowerCase().trim();
             if (!checkWord(s)) {
                 Toast.makeText(getApplicationContext(), "Error: Empty field or invalid length", Toast.LENGTH_LONG).show();
             }
