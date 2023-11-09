@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 //TODO: See any ways to clean up code
+//TODO: Make checks if user puts in a number/special character or make it impossible to do so
 //Firebase Resources
 //https://stackoverflow.com/questions/68409757/how-to-add-firebase-database-rules-without-authentication
 //https://firebase.google.com/docs/rules/basics#realtime-database
