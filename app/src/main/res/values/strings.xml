@@ -10,4 +10,8 @@
     <string name="enter_word_hint">Enter word</string>
     <string name="add_word">ADD WORD</string>
     <string name="back_to_game">Back to Game</string>
+    <string name="alphabet">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="alphabetCaps">ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="you_win">YOU WIN!</string>
+    <string name="play_again">Play Again</string>
 </resources>

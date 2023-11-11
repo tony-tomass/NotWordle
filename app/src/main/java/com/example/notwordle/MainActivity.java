@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.*;
 
@@ -23,8 +24,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.LinkedList;
 import java.util.Random;
 
-//TODO: See any ways to clean up code
-//TODO: Make checks if user puts in a number/special character or make it impossible to do so
+//TODO: Clean up code, enhance app performance
+//    - Popup Animation maybe
+//    - A letter that appears once and is not in the correct position will be marked more than once
+//      if user inputs a word that has that letter more than once
+//          - AKA Do dupe checking
+//    - Make checks if user puts in a number/special character or make it impossible to do so
+//          - UPDATE 11/11/23 - Made it so users can only type in letters => See if there's a friendlier way to do this
+
 //Firebase Resources
 //https://stackoverflow.com/questions/68409757/how-to-add-firebase-database-rules-without-authentication
 //https://firebase.google.com/docs/rules/basics#realtime-database
@@ -70,11 +77,13 @@ public class MainActivity extends AppCompatActivity {
                         toNextRow();
                     }
                     else {
-                        Toast.makeText(getApplicationContext(), "you losed womp womp", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "you losed womp womp", Toast.LENGTH_LONG).show();
+                        showLosePopup();
                     }
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "your winner!!!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "your winner!!!", Toast.LENGTH_LONG).show();
+                    showWinPopup();
                 }
             }
 
@@ -85,10 +94,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             //Restarts game with new word
             answer = word_bank.get(rng.nextInt(word_bank.size()));
-            current_row_index = 0;
-            resetBoxState();
-            checkRows();
-            clearBox();
+            resetGame();
             Toast.makeText(getApplicationContext(), "Game has been reset with a new word!", Toast.LENGTH_LONG).show();
         }
     };
@@ -96,10 +102,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             //Lets user restart from beginning with the same word
-            current_row_index = 0;
-            resetBoxState();
-            checkRows();
-            clearBox();
+            resetGame();
             Toast.makeText(getApplicationContext(), "Game has been cleared! You can try again with more guesses!", Toast.LENGTH_LONG).show();
         }
     };
@@ -141,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     //Iterable<DataSnapshot> test = task.getResult().getChildren();
                     //https://stackoverflow.com/questions/69684871/getting-the-value-of-a-child-of-a-unique-id-from-firebase
-                    //TODO: App performance might suffer if database gets huge
                     for (DataSnapshot child : task.getResult().getChildren()) {
                         String s = child.getValue(String.class);
                         word_bank.add(s);
@@ -156,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
                 answer = word_bank.get(rng.nextInt(word_bank.size()));
                 Log.i("answer", answer);
 
+                //For testing
+                //showLosePopup();
             }
         });
 
@@ -182,6 +186,13 @@ public class MainActivity extends AppCompatActivity {
         };
          */
 
+    }
+
+    public void resetGame() {
+        current_row_index = 0;
+        resetBoxState();
+        checkRows();
+        clearBox();
     }
 
     public void checkRows() {
@@ -329,5 +340,73 @@ public class MainActivity extends AppCompatActivity {
         input_word = stringBuilder.toString().toLowerCase();
         return !input_word.isEmpty() && input_word.length() >= 5;
     }
+
+    //https://stackoverflow.com/questions/5944987/how-to-create-a-popup-window-popupwindow-in-android
+    //https://www.youtube.com/watch?v=cxQvQE1mksI&ab_channel=QubeeTechPresent
+    //TODO: See if you can combine both win and lose popup methods properly
+    public void showWinPopup() {
+        View view = View.inflate(getApplicationContext(), R.layout.popup_win, null);
+        Button play_again = view.findViewById(R.id.play_again_BT);
+        Button close = view.findViewById(R.id.x_BT);
+        View parent = findViewById(R.id.parent);
+
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(view, width, height, focusable);
+
+        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+
+        play_again.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer = word_bank.get(rng.nextInt(word_bank.size()));
+                resetGame();
+                popupWindow.dismiss();
+            }
+        });
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+    }
+    public void showLosePopup() {
+        View view = View.inflate(getApplicationContext(), R.layout.popup_lose, null);
+        Button play_again = view.findViewById(R.id.play_again_BT);
+        Button close = view.findViewById(R.id.x_BT);
+        View parent = findViewById(R.id.parent);
+        TextView correct_answer = view.findViewById(R.id.correct_word_TV);
+
+
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(view, width, height, focusable);
+        correct_answer.setText(answer.toUpperCase());
+
+        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+
+        play_again.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer = word_bank.get(rng.nextInt(word_bank.size()));
+                resetGame();
+                popupWindow.dismiss();
+            }
+        });
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+    }
+
+
 
 }

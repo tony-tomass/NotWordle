@@ -18,8 +18,9 @@
         android:hint="@string/enter_word_hint"
         android:textAlignment="center"
         android:layout_marginTop="250dp"
-        android:inputType="text"
+        android:inputType="text|textNoSuggestions"
         android:maxLength="5"
+        android:digits="@string/alphabet"
         />
 
     <Button
