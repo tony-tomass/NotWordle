@@ -28,7 +28,8 @@ import java.util.Random;
 //    - Popup Animation maybe
 //    - A letter that appears once and is not in the correct position will be marked more than once
 //      if user inputs a word that has that letter more than once
-//          - AKA Do dupe checking
+//          - AKA Do proper dupe checking
+//    - Dupe checking also for entering word into database
 //    - Make checks if user puts in a number/special character or make it impossible to do so
 //          - UPDATE 11/11/23 - Made it so users can only type in letters => See if there's a friendlier way to do this
 
@@ -57,15 +58,6 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener submit_listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            /*
-            //For testing color
-            box_state[0][0] = -2;
-            box_state[0][1] = -1;
-            box_state[0][2] = 0;
-            box_state[0][3] = 1;
-            box_state[0][4] = 2;
-             */
-
             checkWord();
             if (!checkEmptyInputs()) {
                 Toast.makeText(getApplicationContext(), "ERROR: Invalid Input - Fill in each box!", Toast.LENGTH_LONG).show();
@@ -119,9 +111,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        database = FirebaseDatabase.getInstance();
-        myDB = database.getReference("words");
-
         submit_bt = findViewById(R.id.submit_BT);
         restart_bt = findViewById(R.id.restart_BT);
         clear_bt = findViewById(R.id.clear_BT);
@@ -135,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("word_bank_length_before", String.valueOf(word_bank.size()));
 
+        database = FirebaseDatabase.getInstance();
+        myDB = database.getReference("words");
         myDB.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {

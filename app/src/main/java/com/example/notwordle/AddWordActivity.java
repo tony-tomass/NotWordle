@@ -1,14 +1,22 @@
 package com.example.notwordle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class AddWordActivity extends AppCompatActivity {
 
@@ -33,9 +41,32 @@ public class AddWordActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error: Empty field or invalid length", Toast.LENGTH_LONG).show();
             }
             else {
-                myDB.child("words").push().setValue(s);
-                Toast.makeText(getApplicationContext(), "Word has been added to word bank!", Toast.LENGTH_LONG).show();
-                enter_word_et.setText("");
+                //https://stackoverflow.com/questions/38948905/how-can-i-check-if-a-value-exists-already-in-a-firebase-data-class-android
+                // TODO: orderBy is VERY IMPORTANT, IT DOES NOT WORK WITHOUT IT
+                Query query = myDB.child("words").orderByValue().equalTo(s);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            Log.i("EXISTS", "True");
+                            Toast.makeText(getApplicationContext(), "Error: Word already exists in word bank!",
+                                    Toast.LENGTH_LONG).show();
+                            //enter_word_et.setTextColor(Color.parseColor("purple"));
+                        }
+                        else {
+                            Log.i("EXISTS", "False");
+                            myDB.child("words").push().setValue(s);
+                            Toast.makeText(getApplicationContext(), "Word has been added to word bank!",
+                                    Toast.LENGTH_LONG).show();
+                            enter_word_et.setText("");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         }
     };
