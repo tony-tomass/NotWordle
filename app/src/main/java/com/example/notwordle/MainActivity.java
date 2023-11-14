@@ -29,7 +29,6 @@ import java.util.Random;
 //    - A letter that appears once and is not in the correct position will be marked more than once
 //      if user inputs a word that has that letter more than once
 //          - AKA Do proper dupe checking
-//    - Dupe checking also for entering word into database
 //    - Make checks if user puts in a number/special character or make it impossible to do so
 //          - UPDATE 11/11/23 - Made it so users can only type in letters => See if there's a friendlier way to do this
 
