@@ -143,6 +143,14 @@ public class MainActivity extends AppCompatActivity {
                     //Log.i("firebase", String.valueOf(task.getResult().getValue()));
                 }
 
+                if (word_bank.size() == 0) {
+                    //Load default word bank if snapshot ends up null
+                    //TODO: Do tests to see if it works properly
+                    word_bank.add("apple");
+                    word_bank.add("spear");
+                    word_bank.add("brood");
+                }
+
                 Log.i("word_bank_size", String.valueOf(word_bank.size()));
                 // Random number b/w 0 and Length - 1
                 answer = word_bank.get(rng.nextInt(word_bank.size()));
